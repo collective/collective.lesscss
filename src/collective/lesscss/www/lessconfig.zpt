@@ -1,0 +1,415 @@
+<div tal:replace="structure here/manage_page_header" />
+
+<script type="text/javascript">
+// <![CDATA[
+function getSortInput(node) {
+    var iterNode = null;
+    for (var i = 0; i<node.childNodes.length; i++) {
+        iterNode = node.childNodes[i];
+        if (iterNode.nodeType == 1 &&
+            iterNode.nodeName == 'INPUT' &&
+            iterNode.name == 'stylesheets.sort:records:int') {
+            return iterNode;
+        }
+        if (iterNode.hasChildNodes()) {
+            var result = getSortInput(iterNode);
+            if (result) {
+                return result;
+            }
+        }
+    }
+    return null;
+}
+ 
+function exchangeSortValues(a, b) {
+    var aInput = getSortInput(a);
+    var bInput = getSortInput(b);
+    if (!(aInput && bInput)) return false;
+    var tmp = aInput.value;
+    aInput.value = bInput.value;
+    bInput.value = tmp;
+    return true;
+}
+ 
+ 
+function moveDown(node) {
+    var node, fieldset, nextBlock = null;
+    while (node.nodeName != 'FIELDSET') {
+        node = node.parentNode;
+    }
+    fieldset = node;
+    nextBlock = fieldset.nextSibling;
+    if (nextBlock) {
+        var shifted = shiftBlocks(nextBlock, fieldset);
+        if (!shifted) {
+            return true; // follow the link normally
+        } else {
+            return false; // don't follow the link normally
+        }
+    }
+}
+ 
+function moveUp(node) {
+    var node, fieldset, previousBlock = null;
+    while (node.nodeName != 'FIELDSET') {
+        node = node.parentNode;
+    }
+    fieldset = node;
+    previousBlock = fieldset.previousSibling
+    if (previousBlock) {
+        var shifted = shiftBlocks(fieldset, previousBlock);
+        if (!shifted) {
+            return true; // follow the link normally
+        } else {
+            return false; // don't follow the link normally
+        }
+    }
+}
+ 
+function shiftBlocks(fieldset, block) {
+    while (block.nodeType == 3) {
+         block = block.previousSibling;
+    }
+    while (fieldset.nodeType == 3) {
+         fieldset = fieldset.nextSibling;
+    }
+    var exchanged = exchangeSortValues(fieldset, block);
+    if (!exchanged) {
+        return false;
+    }
+    fieldset.parentNode.insertBefore(fieldset, block);
+    return true;
+}
+// ]]>
+</script>
+
+<style type="text/css">
+div.stylesheetform{
+    width: 45%;
+    float: left;
+}
+
+form {
+    margin-bottom: 3em;
+}
+
+fieldset label,fieldset input,fieldset  select {
+    font-size: 80%;
+    font-family: sans-serif;
+    float: left;
+}
+
+legend input {
+    float: none;
+}
+
+fieldset label {
+    width: 11em;
+    text-align: right;
+    padding: 0.2em 0.4em;
+    font-weight: bold;
+    clear: left;
+}
+
+
+fieldset {
+    margin: 0.2em;
+    border: 1px solid black;
+    margin-bottom: 0.5em;
+    padding-bottom: 0;
+    clear: both;
+}
+
+legend {
+    font-size: 90%;
+}
+
+#debugmodelabel {
+    font-weight : bold;
+}
+
+.hiddenLabel {
+    display: block;
+    background: transparent;
+    background-image: none; /* */
+    border: none;
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    margin: -1px 0 0 -1px;
+    width: 1px;
+}
+
+.notFound {
+    background-color: #ffce7b;
+    border: 1px solid #ffa500;
+}
+ul {
+    font-family: Verdana,sans-serif;
+    color: #333;
+    font-size: 85%;
+}
+</style>
+
+<div tal:replace="structure here/manage_tabs" />
+
+<form action="manage_saveStylesheets"
+      tal:attributes="action python:here.absolute_url()+'/manage_saveStylesheets'"
+      method="post">
+
+    <p>
+        <input type="checkbox" id="debugmode" name="debugmode:boolean"
+               tal:attributes="checked here/getDebugMode" />
+        <label for="debugmode" id="debugmodelabel">Development mode</label>
+        In development mode, stylesheets are not merged to composites, and
+        caching and compression of CSS is disabled. The registry also sends
+        HTTP headers to prevent browsers from caching the stylesheets.
+        Useful for testing CSS modifications. 
+    </p>
+    <ul>
+    <li>Will affect all Plone instances, not just the one you change the setting in, so be careful.</li>
+    <li>The setting will not be saved between restarts to avoid accidental performance degradation.</li>
+    </ul>
+    
+    <hr/>
+
+    <p>The order of the stylesheets in this form is the same as the
+    order in the header of the resulting HTML code. Use the up/down arrows
+    to change the rendering order.</p>
+    
+    <p>Defined stylesheets can exist as a browser resource, an item in a skin
+    layer, or as a complete URL. An IE-only
+    <a href="http://msdn.microsoft.com/en-us/library/ms537512.aspx">Conditional
+    Comment</a> may be specified and will be printed in the form of:
+    &lt;!--[if <em>Condition</em>]&gt;...&lt;![endif]--&gt;
+    </p>
+    
+    <p>If your stylesheet uses relative URLs in a <code>url()</code>
+    statement, e.g. to refer to another stylesheet or image, you may
+    experience problems when using the registry in non-debug-mode, as
+    portal_css alters the URL seen by the browser. If so, tick the "Replace
+    relative paths in url() statements with absolute paths?" option to replace
+    any relative path inside a <code>url()</code> statement with an absolute
+    path (prefixed with the Plone site root path) during the resource merging
+    stage. This does not modify the original stylesheet. It may have a slight
+    performance impact, but it should not be an issue if resources get cached
+    properly. It has no effect in debug mode.</p>
+    
+    <p>Please use care when using external resources, as resources defined
+    without SSL may cause an error to be displayed in a user's browser if they
+    are visiting your site using SSL.</p>
+    
+    <tal:stylesheets tal:define="portal python:here.portal_url.getPortalObject();"
+                     tal:repeat="stylesheet here/getResources">
+      <fieldset tal:define="resourceExists python:stylesheet.isExternalResource() or path('exists:portal/%s' % stylesheet.getId());"
+                tal:attributes="class python:test(resourceExists, nothing, 'notFound')">
+
+        <input type="hidden" name="stylesheets.sort:records:int"
+               tal:attributes="value repeat/stylesheet/index" />
+
+        <legend>
+            <label class="hiddenLabel" title="Enable/Disable this StyleSheet">Enabled?</label>
+            <input type="checkbox" name="stylesheets.enabled:records"
+                   title="Enabled?"
+                   tal:attributes="checked stylesheet/getEnabled" />
+            <input type="hidden" name="stylesheets.enabled:records:boolean:default" value="False" />
+
+            <input type="text" name="stylesheets.id:records" size="30"
+                   tal:attributes="value stylesheet/getId" />
+
+                <a onclick="return moveUp(this);" href="#"
+                   title="Move up"
+                   tal:attributes="href string:moveResourceUp?id=${stylesheet/getQuotedId}">
+                     &uarr;
+                </a>
+                <a onclick="return moveDown(this);" href="#"
+                   title="Move down"
+                   tal:attributes="href string:moveResourceDown?id=${stylesheet/getQuotedId}">
+                     &darr;
+                </a>
+                <a href="#" 
+                   title="Remove"
+                   style="color: red;"
+                   tal:attributes="href string:manage_removeStylesheet?id=${stylesheet/getQuotedId}">
+                    x
+                </a>
+                <span tal:condition="not:resourceExists">(resource not found or not accessible)</span>
+        </legend>
+        
+        <div class="stylesheetform">
+            <label>Title</label>
+            <input type="text" name="stylesheets.title:records"
+                   tal:attributes="value stylesheet/getTitle|nothing" />
+
+            <label>Restrict to authenticated users? If yes, the condition will be ignored.</label>
+            <input type="checkbox" name="stylesheets.authenticated:records:boolean"
+                   tal:attributes="checked stylesheet/getAuthenticated | default" />
+            <input type="hidden" name="stylesheets.authenticated:records:boolean:default" value="False" />
+
+            <label title="TAL Condition for inclusion">Condition</label>
+            <input type="text" name="stylesheets.expression:records"
+                   tal:attributes="value stylesheet/getExpression" />
+
+            <label title="">Conditional Comment (IE Only)</label>
+            <input type="text" name="stylesheets.conditionalcomment:records"
+                   tal:attributes="value stylesheet/getConditionalcomment" />
+
+            <label>Merging allowed?</label>
+            <input type="checkbox" name="stylesheets.cookable:records:boolean"
+                   tal:attributes="checked stylesheet/getCookable | default;
+                                   disabled stylesheet/isExternalResource | nothing" />
+            <input type="hidden" name="stylesheets.cookable:records:boolean:default" value="False" />
+
+            <label>Caching allowed?</label>
+            <input type="checkbox" name="stylesheets.cacheable:records:boolean"
+                   tal:attributes="checked stylesheet/getCacheable | default;
+                                   disabled stylesheet/isExternalResource | nothing" />
+            <input type="hidden" name="stylesheets.cacheable:records:boolean:default" value="False" />
+            
+            <label title="This may be necessary when merging stylesheets that use relative URLs. It will not change the underlying stylesheet.">
+                Replace relative paths in <code>url()</code> statements with absolute paths?
+            </label>
+            <input type="checkbox" name="stylesheets.applyPrefix:records:boolean"
+                   tal:attributes="checked stylesheet/getApplyPrefix | default;
+                                   disabled stylesheet/isExternalResource | nothing" />
+            <input type="hidden" name="stylesheets.applyPrefix:records:boolean:default" value="False" />
+        </div>
+
+        <div class="stylesheetform">
+            <label>CSS Media</label>
+            <input type="text" name="stylesheets.media:records"
+                   tal:attributes="value stylesheet/getMedia|nothing" />
+
+            <label>rel</label>
+            <input type="text" name="stylesheets.rel:records"
+                   tal:attributes="value stylesheet/getRel|nothing" />
+
+            <label>Render type</label>
+            <select name="stylesheets.rendering:records">
+                <option tal:define="options python:test(stylesheet.isExternalResource(),here.getExternalRenderingOptions(),here.getRenderingOptions())"
+                        tal:repeat="r options"
+                        tal:attributes="value r;
+                                        selected python:r == stylesheet.getRendering()"
+                        tal:content="r">import</option>
+            </select>
+
+            <label>Compression type</label>
+            <select name="stylesheets.compression:records">
+                <option tal:define="options python:test(stylesheet.isExternalResource(),here.getExternalCompressionOptions(),here.getCompressionOptions())"
+                        tal:repeat="r options"
+                        tal:attributes="value r;
+                                        selected python:r == stylesheet.getCompression()"
+                        tal:content="r">safe</option>
+            </select>
+        </div>
+
+        <div style="clear: both;">&nbsp;</div>
+        
+
+      </fieldset>
+    </tal:stylesheets>
+
+    <input type="submit" i18n:attributes="value" value="Save" />
+
+</form>
+
+<form action="manage_addStylesheet"
+      tal:attributes="action python:here.absolute_url()+'/manage_addStylesheet'"
+      method="post">
+
+    <fieldset>
+
+          <legend>Add a new stylesheet</legend>
+
+          <div>
+              <label for="id">ID/URL</label>
+              <input type="text" name="id" size="50" />
+          </div>
+
+          <div>
+              <label>Title</label>
+              <input type="text" name="title" />
+          </div>
+
+          <div>
+              <label>Restrict to authenticated users? If yes, the condition will be ignored.</label>
+              <input type="checkbox" name="authenticated" value="0" />
+          </div>
+
+          <div>
+              <label>Condition</label>
+              <input type="text" name="expression" size="50" />
+          </div>
+
+          <div>
+              <label>Conditional Comment (IE Only)</label>
+              <input type="text" name="conditionalcomment" size="50" />
+          </div>
+
+          <div>
+              <label>CSS Media</label>
+              <input type="text" name="media" />
+          </div>
+
+          <div>
+              <label>rel</label>
+              <input type="text" name="rel" value="stylesheet" />
+          </div>
+
+          <div>
+              <label>Render type</label>
+              <select name="rendering">
+                  <option tal:repeat="r here/getRenderingOptions"
+                          tal:attributes="value r"
+                          tal:content="r">import</option>
+              </select>
+          </div>
+
+          <div>
+              <label>Compression type</label>
+              <select name="compression">
+                  <option tal:repeat="r here/getCompressionOptions"
+                          tal:attributes="value r;
+                                          selected python:r=='safe'"
+                          tal:content="r">safe</option>
+              </select>
+          </div>
+
+          <div>
+              <label>Enabled?</label>
+              <input type="checkbox" name="enabled:boolean" value="True" checked="1" />
+              <input type="hidden" name="enabled:boolean:default" value="False" />
+          </div>
+
+          <div>
+              <label>Merging allowed?</label>
+              <input type="checkbox" name="cookable:boolean" value="True" checked="1" />
+              <input type="hidden" name="cookable:boolean:default" value="False" />
+          </div>
+
+          <div>
+              <label>Caching allowed?</label>
+              <input type="checkbox" name="cacheable:boolean" value="True" checked="1" />
+              <input type="hidden" name="cacheable:boolean:default" value="False" />
+          </div>
+
+          <div>
+              <label title="This may be necessary when merging stylesheets that use relative URLs. It will not change the underlying stylesheet.">
+                Replace relative paths in <code>url()</code> statements with absolute paths?
+              </label>
+              <input type="checkbox" name="applyPrefix:boolean" value="True" />
+              <input type="hidden" name="applyPrefix:boolean:default" value="False" />
+          </div>
+
+
+          <div>
+              <input type="submit" i18n:attributes="value" value="Add" />
+          </div>
+          <p style="clear:both">&nbsp;</p>
+
+
+    </fieldset>
+
+</form>
+
+<div tal:replace="structure here/manage_page_footer" />

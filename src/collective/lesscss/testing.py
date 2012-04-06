@@ -3,8 +3,10 @@ from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import IntegrationTesting
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import applyProfile
+from plone.testing import z2
 
 from zope.configuration import xmlconfig
+
 
 class CollectiveLesscss(PloneSandboxLayer):
 
@@ -16,7 +18,6 @@ class CollectiveLesscss(PloneSandboxLayer):
         xmlconfig.file('configure.zcml',
                        collective.lesscss,
                        context=configurationContext)
-
 
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'collective.lesscss:default')
