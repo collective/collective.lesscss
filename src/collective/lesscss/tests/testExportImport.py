@@ -1,4 +1,6 @@
-from collective.lesscss.tests.RegistryTestCase import RegistryTestCase
+from collective.lesscss.tests.base import RegistryTestCase
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
 
 
 class TestExportImport(RegistryTestCase):
@@ -7,30 +9,22 @@ class TestExportImport(RegistryTestCase):
         # Test that you can tell the resource registries to remove a
         # resource (a javascript here) using xml.
         tool = self.portal.portal_setup
-        profile_id = 'profile-Products.ResourceRegistries.tests:test'
+        profile_id = 'profile-collective.lesscss.tests:test'
         # The next line used to throw an UnboundLocalError:
         try:
-            result = tool.runImportStepFromProfile(profile_id, 'jsregistry')
+            result = tool.runImportStepFromProfile(profile_id, 'lessregistry')
         except UnboundLocalError, e:
             self.fail("UnboundLocalError thrown: %s" % e)
-        self.failUnless("resourceregistry: Javascript registry imported." in \
-                   result['messages']['jsregistry'],
-               "Javascript registry should have been imported")
+        self.failUnless("resourceregistry: LESS Stylesheet registry imported." in \
+                   result['messages']['lessregistry'],
+               "LESS registry should have been imported")
         # We depend on some other steps:
         self.assertEqual(result['steps'],
-                         [u'toolset', u'componentregistry', 'jsregistry'])
+                         [u'toolset', u'componentregistry', 'lessregistry'])
 
     def test_snapshot(self):
         # GenericSetup snapshot should work
-        self.setRoles(['Manager'])
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
         tool = self.portal.portal_setup
         snapshot_id = tool._mangleTimestampName('test')
         tool.createSnapshot(snapshot_id)
-
-
-def test_suite():
-    from unittest import TestSuite, makeSuite
-    suite = TestSuite()
-    suite.addTest(makeSuite(TestExportImport))
-
-    return suite

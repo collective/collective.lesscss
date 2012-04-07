@@ -3,26 +3,11 @@ from plone.app.testing import login
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 
-from Products.CMFCore.utils import getToolByName
 from AccessControl import Unauthorized
-
-from collective.lesscss.testing import\
-    COLLECTIVE_LESSCSS_INTEGRATION_TESTING
 
 from zope.interface.verify import verifyObject
 from collective.lesscss.interface import ILESSRegistry
-
-
-class RegistryTestCase(unittest.TestCase):
-
-    layer = COLLECTIVE_LESSCSS_INTEGRATION_TESTING
-
-    def setUp(self):
-        self.app = self.layer['app']
-        self.portal = self.layer['portal']
-        self.qi_tool = getToolByName(self.portal, 'portal_quickinstaller')
-        self.tool = getattr(self.portal, 'portal_less')
-        self.tool.clearResources()
+from collective.lesscss.tests.base import RegistryTestCase
 
 
 class TestProductInstalled(RegistryTestCase):

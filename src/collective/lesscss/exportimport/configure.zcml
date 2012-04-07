@@ -1,0 +1,31 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="plone"
+    >
+
+  <genericsetup:importStep
+      name="lessregistry"
+      title="LESS Stylesheet registry"
+      description="Import LESS stylesheet registry"
+      handler="collective.lesscss.exportimport.lessregistry.importLESSRegistry">
+    <depends name="toolset"/>
+    <depends name="componentregistry"/>
+  </genericsetup:importStep>
+
+  <genericsetup:exportStep
+      name="lessregistry"
+      title="LESS Stylesheet registry"
+      description="Export LESS stylesheet registry"
+      handler="collective.lesscss.exportimport.lessregistry.exportLESSRegistry"
+      />
+
+  <adapter
+      factory=".lessregistry.LESSRegistryNodeAdapter"
+      provides="Products.GenericSetup.interfaces.IBody"
+      for="collective.lesscss.interface.ILESSRegistry
+           Products.GenericSetup.interfaces.ISetupEnviron"
+      />
+
+</configure>

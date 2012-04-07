@@ -19,6 +19,11 @@ class CollectiveLesscss(PloneSandboxLayer):
                        collective.lesscss,
                        context=configurationContext)
 
+        import collective.lesscss.tests
+        xmlconfig.file('test.zcml',
+                       collective.lesscss.tests,
+                       context=configurationContext)
+
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'collective.lesscss:default')
 

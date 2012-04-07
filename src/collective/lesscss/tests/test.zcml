@@ -1,0 +1,17 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+       xmlns:browser="http://namespaces.zope.org/browser"
+       xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+       xmlns:cmf="http://namespaces.zope.org/cmf"
+       i18n_domain="ResourceRegistries.tests">
+
+
+  <genericsetup:registerProfile
+      name="test"
+      title="collective.lesscss"
+      directory="test_profile"
+      description="Test Profile for package collective.lesscss"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      />
+
+</configure>
