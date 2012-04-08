@@ -10,8 +10,9 @@ RoadMap
 
 * A portal_less inherited from CSSRegistry [ok]
 * Import/Export GS profile [ok]
-* A viewlet to include less files if we need to achieved this client side
-* Register less.js in portal_javascripts
+* A viewlet to include less files if we need to achieved this client side [ok]
+* Register less.js in portal_javascripts [ok]
 * A site wide configuration with : transform server side / client wide.
-* Provide documented buildout to install nodejs to compile your files server side and make the results in cached with memoize
-* test with twitter's bootstrap sources.
+* Provide documented buildout to install nodejs to compile your files server side [ok]
+* and make the results in cached with memoize
+* test with twitter's bootstrap sources

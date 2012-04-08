@@ -1,0 +1,6 @@
+<layers>
+    <layer
+        name="collective.lesscss"
+        interface="collective.lesscss.interface.ICollectiveLESSCSSLayer"
+        />
+</layers>

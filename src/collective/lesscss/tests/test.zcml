@@ -2,8 +2,13 @@
        xmlns:browser="http://namespaces.zope.org/browser"
        xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
        xmlns:cmf="http://namespaces.zope.org/cmf"
-       i18n_domain="ResourceRegistries.tests">
+       i18n_domain="collective.lesscss.tests">
 
+  <cmf:registerDirectory
+      name="testskin"
+      />
+
+  <includeOverrides file="overrides.zcml" package="collective.lesscss"/>
 
   <genericsetup:registerProfile
       name="test"

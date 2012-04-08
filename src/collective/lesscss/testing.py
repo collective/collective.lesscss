@@ -26,8 +26,12 @@ class CollectiveLesscss(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         applyProfile(portal, 'collective.lesscss:default')
+        applyProfile(portal, 'collective.lesscss.tests:test')
 
 COLLECTIVE_LESSCSS_FIXTURE = CollectiveLesscss()
 COLLECTIVE_LESSCSS_INTEGRATION_TESTING = \
     IntegrationTesting(bases=(COLLECTIVE_LESSCSS_FIXTURE, ),
                        name="CollectiveLesscss:Integration")
+COLLECTIVE_LESSCSS_FUNCTIONAL_TESTING = \
+    FunctionalTesting(bases=(COLLECTIVE_LESSCSS_FIXTURE,),
+                      name="CollectiveLesscss:Functional")
