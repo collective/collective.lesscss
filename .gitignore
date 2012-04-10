@@ -10,3 +10,5 @@ _build
 *.DS_Store
 *.egg
 var
+.mr.developer.cfg
+extras

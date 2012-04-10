@@ -1,4 +1,7 @@
 # -*- extra stuff goes here -*-
+from zope.i18nmessageid import MessageFactory
+
+LESSCSSMessageFactory = MessageFactory('collective.lesscss')
 
 
 def initialize(context):

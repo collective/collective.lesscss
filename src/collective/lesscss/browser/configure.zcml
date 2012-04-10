@@ -17,4 +17,11 @@
         allowed_interface=".interfaces.IStylesView"
         />
 
+    <browser:page
+      name="lesscss-controlpanel"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.LESSCSSControlPanel"
+      permission="cmf.ManagePortal"
+      />
+
 </configure>
