@@ -18,6 +18,13 @@
         />
 
     <browser:page
+        for="*"
+        name="compiled_styles.css"
+        class=".compiledcss.compiledCSSView"
+        permission="zope.Public"
+        />
+
+    <browser:page
       name="lesscss-controlpanel"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".controlpanel.LESSCSSControlPanel"

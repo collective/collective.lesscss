@@ -23,15 +23,15 @@ class ILESSCSSControlPanel(Interface):
     configuration registry and obtainable via plone.registry.
     """
 
-    # enable_less_stylesheets = schema.ASCIILine(
-    #     title=_(u'label_enable_less_stylesheets', default=u'Enable LESS stylesheets'),
-    #     description=_(u'help_enable_less_stylesheets',
-    #                     default=u"This setting will enable the LESS stylesheets on a system wide basis."
-    #                             u"It's intended to use while in development mode."
-    #                             u"In production mode is recommended to static compile them to CSS files."
-    #                             u"You can achive this automatically by unsetting this option."),
-    #     default=True
-    #     )
+    enable_less_stylesheets = schema.Bool(
+        title=_(u'label_enable_less_stylesheets', default=u'Enable LESS stylesheets'),
+        description=_(u'help_enable_less_stylesheets',
+                        default=u"This setting will enable the LESS stylesheets on a site wide basis."
+                                u"It's intended to use while in (theme) development mode."
+                                u"In production mode it is recommended to static compile them to CSS files."
+                                u"You can achive this automatically by unsetting this option."),
+        default=True
+        )
 
 
 class LESSCSSEditForm(controlpanel.RegistryEditForm):
@@ -70,34 +70,9 @@ class LESSCSSEditForm(controlpanel.RegistryEditForm):
     @button.buttonAndHandler(_(u'Get token'), name='getToken')
     def handleGetToken(self, action):
         data, errors = self.extractData()
-        credentials = dict(login=data.get('max_app_username'),
-                           password=data.get('max_app_password'))
-        from upc.maxui.max import getToken
-        logger = logging.getLogger('upc.maxui')
-
-        #Authenticat to max as operations user
-        maxcli = MaxClient(data.get('max_server'), auth_method="basic")
-        maxcli.setBasicAuth(data.get('max_ops_username'), data.get('max_ops_password'))
-
-        #Add App user to max
-        result = maxcli.addUser(credentials['login'], displayName=data.get('max_app_displayname'))
-        if not result:
-            logger.info('Error creating MAX user for user: %s' % credentials['login'])
-            IStatusMessage(self.request).addStatusMessage(_(u"An error occurred during creation of max user"), "info")
-        else:
-            logger.info('MAX Agent user %s created' % credentials['login'])
-            # Request token for app user
-            oauth_token = getToken(credentials)
-            registry = queryUtility(IRegistry)
-            settings = registry.forInterface(ILESSCSSControlPanel, check=False)
-            settings.max_app_token = str(oauth_token)
-
-            #Subscribe app user to max
-            club_url = getToolByName(self.context, "portal_url").getPortalObject().absolute_url()
-            maxcli.setActor(credentials['login'])
-            maxcli.subscribe(club_url)
-
-            logger.info('MAX user %s subscribed to %s' % (credentials['login'], club_url))
+        if not data.get('enable_less_stylesheets', None):
+            # Compile all enabled LESS resources from portal_less into static CSS resources
+            #compileLESSresources(self.context)
             IStatusMessage(self.request).addStatusMessage(_(u"Token for MAX application user saved"), "info")
 
 
