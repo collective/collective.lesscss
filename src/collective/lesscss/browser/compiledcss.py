@@ -7,6 +7,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.resource.interfaces import IResourceDirectory
 from zope.component import getUtility
 import logging
+import re
 
 
 class compiledCSSView(BrowserView):
@@ -20,16 +21,18 @@ class compiledCSSView(BrowserView):
         portal_less = getToolByName(self.context, 'portal_less')
         lessc_command_line = os.path.join(os.environ.get('INSTANCE_HOME'), os.path.pardir, os.path.pardir, 'bin', 'lessc')
         less_resources = portal_less.getEvaluatedResources(self.context)
+        regex = r'^(\+\+[\w_-]+\+\+[\w_-]+)\/(.*)$'
 
         results = []
 
         for less_resource in less_resources:
             res_id = less_resource.getId()
+            find = re.search(regex, res_id)
+
             # Just make sure that is a plone.resource object
-            if '++' in res_id:
+            if find:
                 # Extract its resource directory type and name
-                resource_directory_type = res_id.split(os.path.sep)[0]
-                resource_file_name = res_id.split(os.path.sep)[1]
+                resource_directory_type, resource_file_name = find.groups()
 
                 # Get its directoryResource object and extract the full path
                 resource_path = getUtility(IResourceDirectory, name=resource_directory_type).directory
