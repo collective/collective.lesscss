@@ -12,3 +12,5 @@ _build
 var
 .mr.developer.cfg
 extras
+build
+dist

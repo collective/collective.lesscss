@@ -16,7 +16,7 @@ long_description = (
 
 setup(name='collective.lesscss',
       version=version,
-      description="",
+      description="This package allow theme developers to add LESS stylesheets into a Plone site.",
       long_description=long_description,
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
