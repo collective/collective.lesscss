@@ -21,6 +21,7 @@ setup(name='collective.lesscss',
       # Get more strings from
       # http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
+        "Framework :: Plone",
         "Programming Language :: Python",
         ],
       keywords='plone zope less css',
