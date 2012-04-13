@@ -6,20 +6,8 @@
       metal:use-macro="here/prefs_main_template/macros/master"
       i18n:domain="plone">
 
-<metal:javascript_head_slot fill-slot="javascript_head_slot">
-<!--     <script type="text/javascript"
-        tal:attributes="src string:${context/portal_url}/++resource++plone.app.discussion.javascripts/controlpanel.js">
-    </script> -->
-</metal:javascript_head_slot>
-
-
 <body>
 <div id="content" metal:fill-slot="prefs_configlet_content">
-
-<!--     <script type="text/javascript"
-        tal:attributes="src string:${context/portal_url}/++resource++plone.app.discussion.javascripts/controlpanel.js">
-    </script> -->
-
 
     <div metal:use-macro="context/global_statusmessage/macros/portal_message">
       Portal status message
@@ -33,8 +21,6 @@
     </a> &rsaquo;
 
     <h1 class="documentFirstHeading" tal:content="view/label">View Title</h1>
-
-    <!-- <tal:block replace="structure view/resourceDirectory/@@plone.resourceeditor.filemanager" /> -->
 
     <div id="layout-contents">
         <span tal:replace="structure view/contents" />

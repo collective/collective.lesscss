@@ -36,6 +36,7 @@ setup(name='collective.lesscss',
       install_requires=[
           'setuptools',
           'Products.ResourceRegistries',
+          'plone.resource'
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},

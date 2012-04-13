@@ -3,6 +3,11 @@ from Products.PythonScripts.standard import url_quote
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 
+from plone.registry.interfaces import IRegistry
+from zope.component import queryUtility, getMultiAdapter
+
+from collective.lesscss.browser.controlpanel import ILESSCSSControlPanel
+
 
 class LESSStylesView(BrowserView):
     """ Information for LESS style rendering. """
@@ -49,3 +54,12 @@ class LESSStylesView(BrowserView):
                 raise ValueError("Unkown rendering method '%s' for style '%s'" % (rendering, style.getId()))
             result.append(data)
         return result
+
+    def isDevelopmentMode(self):
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(ILESSCSSControlPanel, check=False)
+        return settings.enable_less_stylesheets
+
+    def compiledCSSURL(self):
+        portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+        return "%s/compiled_styles.css" % portal_state.portal_url()

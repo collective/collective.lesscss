@@ -1,7 +1,14 @@
 Changelog
 =========
 
-1.0dev (unreleased)
+1.0b1 (2012-04-13)
 -------------------
 
-- Package created using zopeskel [sneridagh]
+* A portal_less inherited from CSSRegistry [sneridagh]
+* Import/Export GS profile [sneridagh]
+* A viewlet to include less files [sneridagh]
+* Register less.js in portal_javascripts [sneridagh]
+* A site wide configuration with : transform server side / client wide. [sneridagh]
+* Provide documented buildout to install nodejs to compile your files server side [sneridagh]
+* Make the results in cached with memoize [sneridagh]
+* test with twitter's bootstrap sources [sneridagh]
