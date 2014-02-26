@@ -61,7 +61,7 @@ Server-side compiled LESS resources are recommended in production mode. By unset
 
     [nodejs]
     recipe = gp.recipe.node
-    url = http://nodejs.org/dist/v0.6.14/node-v0.6.14.tar.gz
+    url = http://nodejs.org/dist/v0.10.26/node-v0.10.26.tar.gz
     npms = less
     scripts = lessc
 
