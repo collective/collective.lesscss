@@ -2,5 +2,7 @@
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
   <javascript authenticated="False" cacheable="True" compression="none"
     conditionalcomment="" cookable="False" enabled="True" expression=""
-    id="less-1.3.0.min.js" inline="False"/>
+    id="less.min.js" inline="False"/>
+
+  <javascript id="less-1.3.0.min.js" remove="True" />
 </object>
