@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.2 (unreleased)
+----------------
+
+- Nothing changed yet.
+
+
 1.1 (2014-03-11)
 ----------------
 * updated nodejs to version 0.10.26
