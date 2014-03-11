@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.1 (unreleased)
+----------------
+* updated nodejs to version 0.10.26
+  [seppeljordan]
+
+* updated version of less.js to 1.6.3
+  [jaroel]
+
 1.0b2 (2012-04-14)
 -------------------
 
