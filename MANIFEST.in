@@ -1,0 +1,7 @@
+include *.rst
+include *.txt
+include *.py
+include *.cfg
+
+recursive-include docs *
+recursive-include src *
