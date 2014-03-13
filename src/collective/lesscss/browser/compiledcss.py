@@ -33,7 +33,7 @@ class compiledCSSView(BrowserView):
                          "If not, you should provide one (e.g. symbolic link) and place it there.")
 
         less_resources = portal_less.getEvaluatedResources(self.context)
-        regex = r'^(\+\+[\w_-]+\+\+[\w_-]+)\/(.*)$'
+        regex = r'^(\+\+[\w_-]+\+\+[\w_-\.]+)\/(.*)$'
 
         results = []
 
