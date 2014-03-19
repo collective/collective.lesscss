@@ -4,7 +4,8 @@ Changelog
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Update to lessjs 1.7.0
+  [jaroel]
 
 
 1.1 (2014-03-11)
