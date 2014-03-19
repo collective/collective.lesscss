@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2 (unreleased)
+1.2 (2014-03-19)
 ----------------
 
 - Update to lessjs 1.7.0
