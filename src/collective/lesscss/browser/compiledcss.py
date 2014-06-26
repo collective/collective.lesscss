@@ -27,13 +27,6 @@ class compiledCSSView(BrowserView):
         return getToolByName(self.context, 'portal_less')
                     
 
-    @staticmethod
-    def output_obj_info(obj):
-        represent = lambda x: str(x)
-        objType = represent(type(obj))
-        objSignatur = represent(obj)
-        return "Object %s has type %s" % (objType, objSignatur)
-
     def getInlineLess(self, item_id):
         """ Get the less code of a registered resource as a string
 
