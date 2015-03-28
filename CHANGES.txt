@@ -4,6 +4,15 @@ Changelog
 1.4.dev0 (unreleased)
 ---------------------
 
+- Added Spanish translation
+  [macagua]
+
+- Added more improvements about i18n
+  [macagua]
+
+- Added Bash script for i18ndude
+  [macagua]
+
 1.3 (2014-07-02)
 ----------------
 
