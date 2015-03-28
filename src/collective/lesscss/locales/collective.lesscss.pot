@@ -1,0 +1,64 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2015-03-27 19:57+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: ../browser/controlpanel.py:60
+msgid "Cancel"
+msgstr ""
+
+#: ../browser/controlpanel.py:56
+msgid "Changes saved"
+msgstr ""
+
+#: ../browser/controlpanel.py:62
+msgid "Edit cancelled"
+msgstr ""
+
+#: ../browser/controlpanel.py:67
+msgid "Invalidate LESS cache"
+msgstr ""
+
+#. Default: "LESS Stylesheets Tool"
+#: ../profiles/default/controlpanel.xml
+msgid "LESS Stylesheets Tool"
+msgstr ""
+
+#: ../browser/controlpanel.py:39
+msgid "LESS resources settings"
+msgstr ""
+
+#: ../browser/controlpanel.py:49
+msgid "Save"
+msgstr ""
+
+#: ../browser/controlpanel.py:70
+msgid "Static compiled LESS resources cache refreshed."
+msgstr ""
+
+#. Default: "This setting will control the way LESS stylesheets are compiled for this site. Client-side compiling is intended to use while in (theme) development mode. Server-side compiled LESS resources are recommended in production mode. By unsetting this option, this site will server-side compile them into CSS resources and enable cache on them."
+#: ../browser/controlpanel.py:24
+msgid "help_enable_less_stylesheets"
+msgstr ""
+
+#. Default: "Settings related to site LESS resources."
+#: ../browser/controlpanel.py:40
+msgid "help_lesscss_settings_editform"
+msgstr ""
+
+#. Default: "Enable client-side compiling LESS stylesheets"
+#: ../browser/controlpanel.py:23
+msgid "label_enable_less_stylesheets"
+msgstr ""
+

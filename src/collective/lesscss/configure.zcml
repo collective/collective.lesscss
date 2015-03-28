@@ -11,6 +11,8 @@
   <include package=".exportimport" />
   <include package=".browser" />
 
+  <i18n:registerTranslations directory="locales" />
+
   <cmf:registerDirectory name="lesscss" />
 
   <genericsetup:registerProfile
