@@ -9,9 +9,9 @@ import logging
 import re
 
 
-def render_cachekey(method, self, resource_id):
-    """Cache by resource id"""
-    return resource_id
+def render_cachekey(method, self):
+    """Cache for compiled resources"""
+    return "collective.lesscss.browser.compiledcss.compiledCSSView.__call__"
 
 
 class compiledCSSView(BrowserView):
@@ -48,31 +48,30 @@ class compiledCSSView(BrowserView):
                          "If not, you should provide one (e.g. symbolic link) and place it there.")
         return lessc_command_line
 
+    @ram.cache(render_cachekey)
     def __call__(self):
         portal_less = self.portal_less()
 
         less_resources = portal_less.getEvaluatedResources(self.context)
+        less_resources_ids = [l.getId() for l in less_resources]
 
         results = []
-
-        for less_resource in less_resources:
-            
-            res_id = less_resource.getId()
-            compiled_css = self.compile_less_resource_id(res_id)
-
+        for res_id in less_resources_ids:
+            resource_inline = self.getInlineLess(res_id)
             results.append('/*    %s    */\n' % res_id)
-            results.append(compiled_css)
+            results.append(resource_inline)
             results.append('\n/*    End  %s    */\n' % res_id)
-            
-        self.request.response.setHeader('Content-Type', 'text/css')
-        return ''.join(results)
 
-    @ram.cache(render_cachekey)
-    def compile_less_resource_id(self, resource_id):
-        resource_inline = self.getInlineLess(resource_id)
-        result = self.compile_less_code(self._get_lessc_cmd(), resource_inline)
-        self.logger.info("The resource %s has been server-side compiled." % resource_id)
-        return result
+        compiled_css = self.compile_less_code(
+            self._get_lessc_cmd(),
+            ''.join(results)
+        )
+
+        for res_id in less_resources_ids:
+            self.logger.info("The resource %s has been server-side compiled." % res_id)
+
+        self.request.response.setHeader('Content-Type', 'text/css')
+        return compiled_css
 
     def compile_less_code(self, lessc_command_line, less_code):
         """Compiles less code via the lessc compiler installed in bin/.

@@ -4,6 +4,11 @@ Changelog
 1.4.dev0 (unreleased)
 ---------------------
 
+- Improve server-side compilation when there references between files.
+  We need to compile the resources all together because otherwise the compiler
+  will fail on unknown variables references between files.
+  [laulaz]
+
 - Added Spanish translation
   [macagua]
 
