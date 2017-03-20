@@ -2,11 +2,8 @@ import os
 import subprocess
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
-from plone.resource.interfaces import IResourceDirectory
-from zope.component import getUtility
 from plone.memoize import ram
 import logging
-import re
 
 
 def render_cachekey(method, self):
@@ -25,7 +22,6 @@ class compiledCSSView(BrowserView):
 
     def portal_less(self):
         return getToolByName(self.context, 'portal_less')
-                    
 
     def getInlineLess(self, item_id):
         """ Get the less code of a registered resource as a string
