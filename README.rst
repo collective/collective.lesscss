@@ -77,7 +77,7 @@ IMPORTANT NOTE: Server-side compiling requires to have declared the resources vi
       name="less"
       />
 
-And furthermore, if you aren't using plone.app.themimg for develop your theme you should declare the type you are using for your resources by creating this class somewhere in your theme (e.g. traversal.py)::
+And furthermore, if you aren't using plone.app.theming for develop your theme you should declare the type you are using for your resources by creating this class somewhere in your theme (e.g. traversal.py)::
 
     from plone.resource.traversal import ResourceTraverser
 
