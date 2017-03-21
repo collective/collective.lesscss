@@ -40,8 +40,12 @@ class compiledCSSView(BrowserView):
         inline_code = portal_less.getInlineResource(item_id, self.context)
         return inline_code
 
-    @ram.cache(render_cachekey)
     def __call__(self):
+        self.request.response.setHeader('Content-Type', 'text/css')
+        return self.get_compiled_less_ressources()
+
+    @ram.cache(render_cachekey)
+    def get_compiled_less_ressources(self):
         portal_less = self.portal_less()
 
         less_resources = portal_less.getEvaluatedResources(self.context)
@@ -65,7 +69,6 @@ class compiledCSSView(BrowserView):
         if mustMinify:
             self.logger.info("Resources have been minified.")
 
-        self.request.response.setHeader('Content-Type', 'text/css')
         return compiled_css
 
     def compile_less_code(self, less_code, minify=False):
