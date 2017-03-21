@@ -1,9 +1,14 @@
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser import BrowserView
+from plone.memoize import ram
+from plone.registry.interfaces import IRegistry
+from zope.component import queryUtility
+
+import logging
 import os
 import subprocess
-from Products.Five.browser import BrowserView
-from Products.CMFCore.utils import getToolByName
-from plone.memoize import ram
-import logging
+
+from collective.lesscss.browser.controlpanel import ILESSCSSControlPanel
 
 
 def render_cachekey(method, self):
@@ -36,12 +41,16 @@ class compiledCSSView(BrowserView):
         return inline_code
 
     def _get_lessc_cmd(self):
-        lessc_command_line = os.path.join(os.environ.get('INSTANCE_HOME'), os.path.pardir, os.path.pardir, 'bin', 'lessc')
+        lessc_command_line = os.path.join(os.environ.get('INSTANCE_HOME'),
+                                          os.path.pardir, os.path.pardir,
+                                          'bin',
+                                          'lessc')
         if not os.path.exists(lessc_command_line):
             self.logger.error("A valid lessc executable cannot be found."
-                         "We are assumming that it has been provided by buildout"
-                         "and placed in the buildout bin directory."
-                         "If not, you should provide one (e.g. symbolic link) and place it there.")
+                              "We are assumming that it has been provided by "
+                              "buildout and placed in the buildout bin "
+                              "directory. If not, you should provide one "
+                              "(e.g. symbolic link) and place it there.")
         return lessc_command_line
 
     @ram.cache(render_cachekey)
@@ -58,18 +67,22 @@ class compiledCSSView(BrowserView):
             results.append(resource_inline)
             results.append('\n/*    End  %s    */\n' % res_id)
 
+        mustMinify = self.useCleanCss()
         compiled_css = self.compile_less_code(
             self._get_lessc_cmd(),
-            ''.join(results)
+            ''.join(results),
+            mustMinify
         )
 
         for res_id in less_resources_ids:
             self.logger.info("The resource %s has been server-side compiled." % res_id)
+        if mustMinify:
+            self.logger.info("Resources have been minified.")
 
         self.request.response.setHeader('Content-Type', 'text/css')
         return compiled_css
 
-    def compile_less_code(self, lessc_command_line, less_code):
+    def compile_less_code(self, lessc_command_line, less_code, minify=False):
         """Compiles less code via the lessc compiler installed in bin/.
 
         This procedure returns the compiled css code that results of
@@ -78,9 +91,18 @@ class compiledCSSView(BrowserView):
         """
 
         # Call the LESSC executable
-        process = subprocess.Popen([lessc_command_line, '-'],
-                           stdout=subprocess.PIPE,
-                           stdin=subprocess.PIPE)
+        cmd = [lessc_command_line, '-']
+        if minify:
+            cmd.append('--compress')
+        process = subprocess.Popen(cmd,
+                                   stdout=subprocess.PIPE,
+                                   stdin=subprocess.PIPE)
         output, errors = process.communicate(input=less_code)
+
         # Return the command output
         return output
+
+    def useCleanCss(self):
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(ILESSCSSControlPanel, check=False)
+        return settings.use_clean_css

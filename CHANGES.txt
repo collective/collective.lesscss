@@ -4,7 +4,12 @@ Changelog
 1.4.dev0 (unreleased)
 ---------------------
 
-- Improve server-side compilation when there references between files.
+- Add (optional) minification of LESS files.
+  Code is based on https://github.com/collective/collective.lesscss/pull/9 but
+  uses lessc script directly (instead of cleancss) with compress option.
+  [laulaz]
+
+- Improve server-side compilation when there are references between files.
   We need to compile the resources all together because otherwise the compiler
   will fail on unknown variables references between files.
   [laulaz]

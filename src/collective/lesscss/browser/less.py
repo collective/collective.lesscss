@@ -51,7 +51,8 @@ class LESSStylesView(BrowserView):
                         'conditionalcomment': style.getConditionalcomment(),
                         'content': content}
             else:
-                raise ValueError("Unkown rendering method '%s' for style '%s'" % (rendering, style.getId()))
+                raise ValueError("Unkown rendering method '%s' for style '%s'"
+                                 % (rendering, style.getId()))
             result.append(data)
         return result
 
@@ -61,5 +62,6 @@ class LESSStylesView(BrowserView):
         return settings.enable_less_stylesheets
 
     def compiledCSSURL(self):
-        portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+        portal_state = getMultiAdapter((self.context, self.request),
+                                       name=u'plone_portal_state')
         return "%s/compiled_styles.css" % portal_state.portal_url()
