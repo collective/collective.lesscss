@@ -1,4 +1,7 @@
-Victor Fernandez de Alba [sneridagh], Author
-Sebastian Jordan [seppeljordan]
-Leonardo J. Caballero G. [macagua]
-Laurent Lasudry [laulaz]
+Contributors
+============
+
+- Victor Fernandez de Alba [sneridagh], Author
+- Sebastian Jordan [seppeljordan]
+- Leonardo J. Caballero G. [macagua]
+- Laurent Lasudry [laulaz]
