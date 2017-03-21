@@ -4,6 +4,10 @@ Changelog
 1.4.dev0 (unreleased)
 ---------------------
 
+- Use python package lesscpy directly instead of calling a script (#8).
+  This allows to get rid of Node.js in buildout for server-side compiling.
+  [laulaz]
+
 - Add (optional) minification of LESS files.
   Code is based on https://github.com/collective/collective.lesscss/pull/9 but
   uses lessc script directly (instead of cleancss) with compress option.

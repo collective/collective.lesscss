@@ -8,7 +8,7 @@ This package allow theme developers to add LESS stylesheets into a Plone site.
 LESS
 ====
 
-LESS extends CSS with dynamic behavior such as variables, mixins, operations and functions. LESS runs on both the client-side (Chrome, Safari, Firefox) and server-side, with Node.js and Rhino.
+LESS extends CSS with dynamic behavior such as variables, mixins, operations and functions. LESS runs on both the client-side (Chrome, Safari, Firefox) and server-side.
 
 You can find more information about LESS at http://lesscss.org/
 
@@ -34,7 +34,7 @@ This package is intended to be used in conjunction with an user defined Plone Th
 Control Panel
 =============
 
-You can manage the way the LESS resources compile by accessing the LESS resources configlet located at the site setup. By default, client-side LESS resources compile mode is enabled.
+You can manage the way the LESS resources compile by accessing the LESS resources configlet located at the site setup. By default, client-side LESS resources compile mode and minification are enabled.
 
 Client side compiling
 =====================
@@ -50,24 +50,7 @@ collective.lesscss will use the standard method for compiling client-side by usi
 Server side compiling
 =====================
 
-Server-side compiled LESS resources are recommended in production mode. By unsetting this option, the site will server-side compile them into CSS resources and enable a volatile cache on them. Node.js is used for server side compiling, so you should have a Node.js installed in your system and less package installed as well. It's recommended to let buildout handle this for you::
-
-    [buildout]
-    parts = ...
-            nodejs
-            ...
-
-    ...
-
-    [nodejs]
-    recipe = gp.recipe.node
-    url = http://nodejs.org/dist/v0.10.29/node-v0.10.29.tar.gz
-    npms = less
-    scripts = lessc
-
-This will download and compile Node.js and less extension. The *lessc* executable will be available at *bin* directory of your buildout. Please, review https://github.com/collective/collective.lesscss/blob/master/buildout.cfg for more references.
-
-In case you already have Node.js and less extension in your system it's required for you to create a symbolic link of *lessc* executable at *bin* directory of your buildout.
+Server-side compiled LESS resources are recommended in production mode. By unsetting this option, the site will server-side compile them into CSS resources and enable a volatile cache on them. 
 
 IMPORTANT NOTE: Server-side compiling requires to have declared the resources via plone.resource package in your theme package! Example::
 

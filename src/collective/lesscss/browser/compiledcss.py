@@ -2,11 +2,11 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from plone.memoize import ram
 from plone.registry.interfaces import IRegistry
+from six import StringIO
 from zope.component import queryUtility
 
+import lesscpy
 import logging
-import os
-import subprocess
 
 from collective.lesscss.browser.controlpanel import ILESSCSSControlPanel
 
@@ -40,19 +40,6 @@ class compiledCSSView(BrowserView):
         inline_code = portal_less.getInlineResource(item_id, self.context)
         return inline_code
 
-    def _get_lessc_cmd(self):
-        lessc_command_line = os.path.join(os.environ.get('INSTANCE_HOME'),
-                                          os.path.pardir, os.path.pardir,
-                                          'bin',
-                                          'lessc')
-        if not os.path.exists(lessc_command_line):
-            self.logger.error("A valid lessc executable cannot be found."
-                              "We are assumming that it has been provided by "
-                              "buildout and placed in the buildout bin "
-                              "directory. If not, you should provide one "
-                              "(e.g. symbolic link) and place it there.")
-        return lessc_command_line
-
     @ram.cache(render_cachekey)
     def __call__(self):
         portal_less = self.portal_less()
@@ -69,7 +56,6 @@ class compiledCSSView(BrowserView):
 
         mustMinify = self.useCleanCss()
         compiled_css = self.compile_less_code(
-            self._get_lessc_cmd(),
             ''.join(results),
             mustMinify
         )
@@ -82,24 +68,21 @@ class compiledCSSView(BrowserView):
         self.request.response.setHeader('Content-Type', 'text/css')
         return compiled_css
 
-    def compile_less_code(self, lessc_command_line, less_code, minify=False):
-        """Compiles less code via the lessc compiler installed in bin/.
+    def compile_less_code(self, less_code, minify=False):
+        """Compiles less code via the lesscpy compiler.
 
         This procedure returns the compiled css code that results of
         the compilation of the code as a string.  Errors are
         discarded and not returned back.
         """
-
-        # Call the LESSC executable
-        cmd = [lessc_command_line, '-']
-        if minify:
-            cmd.append('--compress')
-        process = subprocess.Popen(cmd,
-                                   stdout=subprocess.PIPE,
-                                   stdin=subprocess.PIPE)
-        output, errors = process.communicate(input=less_code)
-
-        # Return the command output
+        output = ''
+        try:
+            output = lesscpy.compile(
+                StringIO(less_code),
+                xminify=minify
+            )
+        except Exception as e:
+            self.logger.error(e)
         return output
 
     def useCleanCss(self):

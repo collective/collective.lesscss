@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 version = '1.4.dev0'
 
@@ -37,7 +36,8 @@ setup(name='collective.lesscss',
       install_requires=[
           'setuptools',
           'Products.ResourceRegistries',
-          'plone.resource'
+          'plone.resource',
+          'lesscpy',
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},
