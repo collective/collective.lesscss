@@ -20,15 +20,29 @@ class ILESSCSSControlPanel(Interface):
     """
 
     enable_less_stylesheets = schema.Bool(
-        title=_(u'label_enable_less_stylesheets', default=u'Enable client-side compiling LESS stylesheets'),
+        title=_(u'label_enable_less_stylesheets',
+                default=u'Enable client-side compiling LESS stylesheets'),
         description=_(u'help_enable_less_stylesheets',
-                        default=u"This setting will control the way LESS stylesheets are compiled for this site. "
-                                u"Client-side compiling is intended to use while in (theme) development mode. "
-                                u"Server-side compiled LESS resources are recommended in production mode. "
-                                u"By unsetting this option, this site will server-side compile them into CSS "
-                                u"resources and enable cache on them."),
+                      default=u"This setting will control the way LESS "
+                              u"stylesheets are compiled for this site. "
+                              u"Client-side compiling is intended to use "
+                              u"while in (theme) development mode. "
+                              u"Server-side compiled LESS resources are "
+                              u"recommended in production mode. "
+                              u"By unsetting this option, this site will "
+                              u"server-side compile them into CSS "
+                              u"resources and enable cache on them."),
         default=True
         )
+
+    use_clean_css = schema.Bool(
+        title=_(u'label_use_clean_css',
+                default=u'Enable CSS compression'),
+        description=_(u'description_use_clean_css',
+                      default=u"This setting controls whether the compiled CSS"
+                              u" code will be compressed (minified)."),
+        default=True
+    )
 
 
 class LESSCSSEditForm(controlpanel.RegistryEditForm):
@@ -52,7 +66,7 @@ class LESSCSSEditForm(controlpanel.RegistryEditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
-        changes = self.applyChanges(data)
+        self.applyChanges(data)
         IStatusMessage(self.request).addStatusMessage(_(u"Changes saved"),
                                                       "info")
         self.context.REQUEST.RESPONSE.redirect("@@lesscss-controlpanel")

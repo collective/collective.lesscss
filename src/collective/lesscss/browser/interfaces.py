@@ -1,4 +1,4 @@
-from zope.interface import Interface, Attribute
+from zope.interface import Interface
 
 
 class IScriptsView(Interface):
@@ -11,6 +11,7 @@ class IStylesView(Interface):
 
     def styles():
         """ Returns a list of dicts with information for style rendering. """
+
 
 class IKSSView(Interface):
 

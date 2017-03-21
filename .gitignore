@@ -23,6 +23,7 @@ build/
 develop-eggs/
 downloads/
 eggs/
+extras/
 fake-eggs/
 parts/
 dist/

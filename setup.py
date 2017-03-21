@@ -1,13 +1,9 @@
 from setuptools import setup, find_packages
-import os
 
-version = '1.4.dev0'
+version = '2.0.dev0'
 
 long_description = (
     open('README.rst').read()
-    + '\n' +
-    'Contributors\n'
-    '============\n'
     + '\n' +
     open('CONTRIBUTORS.txt').read()
     + '\n' +
@@ -37,7 +33,8 @@ setup(name='collective.lesscss',
       install_requires=[
           'setuptools',
           'Products.ResourceRegistries',
-          'plone.resource'
+          'plone.resource',
+          'lesscpy',
           # -*- Extra requirements: -*-
       ],
       extras_require={'test': ['plone.app.testing']},
