@@ -37,10 +37,10 @@ class ILESSCSSControlPanel(Interface):
 
     use_clean_css = schema.Bool(
         title=_(u'label_use_clean_css',
-                default=u'Enable css compression using clean'),
+                default=u'Enable CSS compression'),
         description=_(u'description_use_clean_css',
-                      default=u"This setting controls whether the compiled css"
-                              u" code will be compressed (minified)"),
+                      default=u"This setting controls whether the compiled CSS"
+                              u" code will be compressed (minified)."),
         default=True
     )
 

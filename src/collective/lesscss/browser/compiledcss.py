@@ -54,7 +54,7 @@ class compiledCSSView(BrowserView):
             results.append(resource_inline)
             results.append('\n/*    End  %s    */\n' % res_id)
 
-        mustMinify = self.useCleanCss()
+        mustMinify = self.shouldMinify()
         compiled_css = self.compile_less_code(
             ''.join(results),
             mustMinify
@@ -85,7 +85,7 @@ class compiledCSSView(BrowserView):
             self.logger.error(e)
         return output
 
-    def useCleanCss(self):
+    def shouldMinify(self):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(ILESSCSSControlPanel, check=False)
         return settings.use_clean_css
