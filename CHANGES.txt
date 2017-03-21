@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.4.dev0 (unreleased)
+2.0.dev0 (unreleased)
 ---------------------
 
 - Use python package lesscpy directly instead of calling a script (#8).
