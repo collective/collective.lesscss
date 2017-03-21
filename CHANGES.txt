@@ -1,8 +1,8 @@
 Changelog
 =========
 
-2.0.dev0 (unreleased)
----------------------
+2.0 (2017-03-21)
+----------------
 
 - Use python package lesscpy directly instead of calling a script (#8).
   This allows to get rid of Node.js in buildout for server-side compiling.
