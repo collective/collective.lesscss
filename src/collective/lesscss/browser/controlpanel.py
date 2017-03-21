@@ -40,7 +40,7 @@ class ILESSCSSControlPanel(Interface):
                 default=u'Enable css compression using clean'),
         description=_(u'description_use_clean_css',
                       default=u"This setting controls whether the compiled css"
-                              u" code will be compressed using clean-css"),
+                              u" code will be compressed (minified)"),
         default=True
     )
 
@@ -66,7 +66,7 @@ class LESSCSSEditForm(controlpanel.RegistryEditForm):
         if errors:
             self.status = self.formErrorsMessage
             return
-        changes = self.applyChanges(data)
+        self.applyChanges(data)
         IStatusMessage(self.request).addStatusMessage(_(u"Changes saved"),
                                                       "info")
         self.context.REQUEST.RESPONSE.redirect("@@lesscss-controlpanel")
