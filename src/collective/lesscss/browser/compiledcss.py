@@ -66,7 +66,7 @@ class compiledCSSView(BrowserView):
 
         for res_id in less_resources_ids:
             self.logger.info("The resource %s has been server-side compiled." % res_id)
-        if mustMinify:
+        if mustMinify and less_resources_ids:
             self.logger.info("Resources have been minified.")
 
         return compiled_css
