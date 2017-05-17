@@ -63,6 +63,8 @@ class compiledCSSView(BrowserView):
             ''.join(results),
             mustMinify
         )
+        if compiled_css is None:
+            return ''
 
         for res_id in less_resources_ids:
             self.logger.info("The resource %s has been server-side compiled." % res_id)
@@ -86,6 +88,7 @@ class compiledCSSView(BrowserView):
             )
         except Exception as e:
             self.logger.error(e)
+            return None
         return output
 
     def shouldMinify(self):

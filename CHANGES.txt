@@ -4,7 +4,8 @@ Changelog
 2.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Don't display info messages if compilation failed
+  [laulaz]
 
 
 2.0 (2017-03-21)
