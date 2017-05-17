@@ -82,6 +82,7 @@ class compiledCSSView(BrowserView):
         """
         output = ''
         try:
+            less_code = less_code.encode('utf-8')
             output = lesscpy.compile(
                 StringIO(less_code),
                 xminify=minify
