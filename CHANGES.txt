@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.1 (unreleased)
+2.0.1 (2017-05-17)
 ------------------
 
 - Always encode CSS string before LESS compilation to avoid errors
