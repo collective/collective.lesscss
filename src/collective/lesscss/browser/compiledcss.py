@@ -1,14 +1,16 @@
+# -*- coding: utf-8 -*-
+from collective.lesscss.browser.controlpanel import ILESSCSSControlPanel
+from plone import api
+from plone.memoize import ram
+from plone.memoize.volatile import DontCache
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from plone.memoize import ram
-from plone.registry.interfaces import IRegistry
 from six import StringIO
 from zope.component import queryUtility
 
 import lesscpy
 import logging
-
-from collective.lesscss.browser.controlpanel import ILESSCSSControlPanel
 
 
 def render_cachekey(method, self):
@@ -67,9 +69,9 @@ class compiledCSSView(BrowserView):
             return ''
 
         for res_id in less_resources_ids:
-            self.logger.info("The resource %s has been server-side compiled." % res_id)
+            self.logger.info('The resource %s has been server-side compiled.' % res_id)
         if mustMinify and less_resources_ids:
-            self.logger.info("Resources have been minified.")
+            self.logger.info('Resources have been minified.')
 
         return compiled_css
 
