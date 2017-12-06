@@ -15,7 +15,10 @@ import logging
 
 def render_cachekey(method, self):
     """Cache for compiled resources"""
-    return "collective.lesscss.browser.compiledcss.compiledCSSView.__call__"
+    portal_less = api.portal.get_tool('portal_less')
+    if portal_less.getDebugMode():
+        raise DontCache
+    return 'collective.lesscss.browser.compiledcss.compiledCSSView.__call__'
 
 
 class compiledCSSView(BrowserView):
