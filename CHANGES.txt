@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.2 (unreleased)
+2.0.2 (2017-12-12)
 ------------------
 
 - Do not get cached lesscss if debugmode is checked in portal_less.
