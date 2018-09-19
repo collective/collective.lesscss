@@ -13,6 +13,7 @@
 .*.cfg
 .installed.cfg
 .mr.developer.cfg
+rebuild_i18n.log
 .hg/
 .bzr/
 .svn/
