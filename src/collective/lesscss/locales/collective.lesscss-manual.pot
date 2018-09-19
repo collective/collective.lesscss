@@ -1,3 +1,4 @@
+# Manually defined message ids
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"

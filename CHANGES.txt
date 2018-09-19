@@ -4,6 +4,9 @@ Changelog
 2.0.3 (unreleased)
 ------------------
 
+- Updated Gettext files
+  [macagua]
+
 - Added more keywords and strings classifiers items 
   and updated others items for this package
   [macagua]
