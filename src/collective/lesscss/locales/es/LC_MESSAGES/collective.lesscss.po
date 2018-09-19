@@ -1,11 +1,11 @@
 # Spanish translations for collective.lesscss package
 # Traducciones al Español del producto collective.lesscss.
-# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2015.
+# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2015-2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.lesscss\n"
-"POT-Creation-Date: 2015-03-27 19:57+0000\n"
-"PO-Revision-Date: 2015-03-27 15:14-0430\n"
+"POT-Creation-Date: 2018-09-19 17:34+0000\n"
+"PO-Revision-Date: 2018-09-19 13:38-0430\n"
 "Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>\n"
 "Language-Team: ES <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,19 +22,23 @@ msgstr ""
 "Language-name: Spanish\n"
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
-#: ../browser/controlpanel.py:60
+#: ../browser/controlpanel.py:74
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: ../browser/controlpanel.py:56
+#: ../browser/controlpanel.py:70
 msgid "Changes saved"
 msgstr "Cambios guardados"
 
-#: ../browser/controlpanel.py:62
+#: ../browser/controlpanel.py:76
 msgid "Edit cancelled"
 msgstr "Edición cancelada"
 
-#: ../browser/controlpanel.py:67
+#: ../configure.zcml:24
+msgid "Installs the collective.lesscss package"
+msgstr "Instala el paquete collective.lesscss"
+
+#: ../browser/controlpanel.py:81
 msgid "Invalidate LESS cache"
 msgstr "Invalida caché LESS"
 
@@ -43,25 +47,34 @@ msgstr "Invalida caché LESS"
 msgid "LESS Stylesheets Tool"
 msgstr "Herramienta hoja de estilos LESS"
 
-#: ../browser/controlpanel.py:39
+#: ../browser/controlpanel.py:53
 msgid "LESS resources settings"
 msgstr "Configuración de recursos LESS"
 
-#: ../browser/controlpanel.py:49
+#: ../browser/controlpanel.py:63
 msgid "Save"
 msgstr "Guardar"
 
-#: ../browser/controlpanel.py:70
+#: ../browser/controlpanel.py:84
 msgid "Static compiled LESS resources cache refreshed."
-msgstr "Los recursos LESS compilados estáticamente son caché refrescados."
+msgstr "Los recursos LESS estáticos compilados son refrescados en caché."
+
+#: ../configure.zcml:24
+msgid "collective.lesscss"
+msgstr "collective.lesscss"
+
+#. Default: "This setting controls whether the compiled CSS code will be compressed (minified)."
+#: ../browser/controlpanel.py:41
+msgid "description_use_clean_css"
+msgstr "Esta configuración controla cuando el código CSS compilado será comprimido (minificado)"
 
 #. Default: "This setting will control the way LESS stylesheets are compiled for this site. Client-side compiling is intended to use while in (theme) development mode. Server-side compiled LESS resources are recommended in production mode. By unsetting this option, this site will server-side compile them into CSS resources and enable cache on them."
-#: ../browser/controlpanel.py:24
+#: ../browser/controlpanel.py:25
 msgid "help_enable_less_stylesheets"
 msgstr "Esta configuración controlara la forma en que las hojas de estilos LESS son compiladas para este sitio. Compilando recursos LESS del lado del cliente está destinado a ser utilizado en modo de desarrollo. Compilando recursos LESS del lado del servidor es recomendado para modo de producción. Deshabilitando esta opción, el sitio compilara del lado del servidor entonces dentro de los recursos CSS y habilitara la caché en estos."
 
 #. Default: "Settings related to site LESS resources."
-#: ../browser/controlpanel.py:40
+#: ../browser/controlpanel.py:54
 msgid "help_lesscss_settings_editform"
 msgstr "Configuraciones relacionadas a los recursos LESS del sitio."
 
@@ -70,3 +83,7 @@ msgstr "Configuraciones relacionadas a los recursos LESS del sitio."
 msgid "label_enable_less_stylesheets"
 msgstr "Habilitar compilación del lado del cliente de hojas de estilos LESS"
 
+#. Default: "Enable CSS compression"
+#: ../browser/controlpanel.py:39
+msgid "label_use_clean_css"
+msgstr "Habilitar compresión CSS"
