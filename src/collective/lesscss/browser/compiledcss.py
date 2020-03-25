@@ -47,6 +47,11 @@ class compiledCSSView(BrowserView):
 
     def __call__(self):
         self.request.response.setHeader('Content-Type', 'text/css')
+        portal_less = api.portal.get_tool('portal_less')
+        if portal_less.getDebugMode():
+            self.request.response.setHeader('Cache-Control', 'no-cache')
+        else:
+            self.request.response.setHeader('Cache-Control', 'public, max-age=31536000')
         return self.get_compiled_less_ressources()
 
     @ram.cache(render_cachekey)

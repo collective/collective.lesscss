@@ -4,6 +4,10 @@ Changelog
 2.0.3 (unreleased)
 ------------------
 
+- Allow browser to cache compiled CSS (compiled_styles.css) while portal_less is
+  not in debug mode
+  [laulaz]
+
 - Updated Spanish translation
   [macagua]
 
