@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.3 (unreleased)
+2.0.3 (2020-04-06)
 ------------------
 
 - Allow browser to cache compiled CSS (compiled_styles.css) while portal_less is
